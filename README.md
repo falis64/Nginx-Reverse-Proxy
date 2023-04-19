@@ -3,6 +3,10 @@
 # What are ports?
 A port in networking is a software-defined number associated to a network protocol that receives or transmits communication for a specific service. A port number is a 16-bit unsigned integer, which ranges from 0 to 65535. Applications use ports to establish communication channels with other applications running on remote devices over the network.
 
+- port (22) - used for ssh connection
+- port (80) - used for HTTP connection
+- port (443) - used for HTTPS connection
+
 # What is a reverse proxy? How is it different from a proxy?
 
 A reverse proxy is a type of proxy server that sits between client devices and one or more servers. It receives requests from clients on behalf of servers and forwards them to the appropriate server. The server's response is then returned to the client by the reverse proxy. A reverse proxy helps to improve performance, security, and scalability of web applications by offloading server resources and serving as a single point of contact for clients.
