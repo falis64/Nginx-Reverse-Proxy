@@ -21,3 +21,44 @@ The main difference between a reverse proxy and a proxy is the direction of traf
 The default configuration for Nginx is stored in the sites-available directory. This directory contains a file called default that defines the default server block for Nginx. The default server block listens on port 80 and serves files from the /var/www/html directory.
 
 # How do you set up a Nginx reverse proxy?
+
+Follow the steps below to set it up:
+1) Start your VM by using vagrant up in VS Code terminal. For this, ensure that app.js is not being deployed automatically in your provisioning.sh
+
+2) Connect to your VM with Bash terminal by navigating into your project folder with cd command and then use vagrant ssh command
+
+3) Use command cd /etc/nginx/sites-available in order to navigate inside the nginx configuration folder
+
+4) Create a new configuration file with nano by using the following command: sudo nano nodeapp.conf (name could be anything, but try to make logical)
+
+5) Inside the file type the following code:
+
+```
+server {
+   listen 80;
+   server_name 192.168.10.100;
+
+   location / {
+       proxy_pass http://192.168.10.100:3000;
+       proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header X-Forwarded-Proto $scheme;
+   }
+}
+```
+````server_name ***`  - can be the name of your server or your ip address```
+
+6) Use ctrl+x to exit nano, then press y to save the changes, and then press enter to save the name of the file
+
+7) Enable the configuration by creating a symbolic link to enable a new config file: sudo ln -s /etc/nginx/sites-available/nodeapp.conf /etc/nginx/sites-enabled/nodeapp.conf
+
+8) Checnk configuration for errors sudo nginx -t
+
+9) Reload nginx - sudo systemctl reload nginx
+
+10) Go back to your home folder by using cd command and then navigate in to cd app
+
+11) Launch app by using node app.js
+
+12) Paste your ip, without port number, into browser and check if it works:
